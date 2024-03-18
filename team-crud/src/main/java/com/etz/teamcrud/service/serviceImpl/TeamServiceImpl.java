@@ -1,6 +1,7 @@
 package com.etz.teamcrud.service.serviceImpl;
 
 
+import com.etz.teamcrud.apiResponse.ApiResponse;
 import com.etz.teamcrud.dto.TeamRequest;
 import com.etz.teamcrud.enums.Status;
 import com.etz.teamcrud.model.Projects;
@@ -13,6 +14,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -38,7 +41,7 @@ public class TeamServiceImpl implements TeamService {
         teamss.setLastName(team.getLastName());
         teamss.setEmail(team.getEmail());
         teamss.setPhoneNumber(team.getPhoneNumber());
-        teamss.setStatus(Status.CREATED);
+        teamss.setStatus(Status.ACTIVE);
         teamss.setId(team.getId());
         teamRepository.save(teamss);
         //return teamss;
@@ -86,4 +89,26 @@ public class TeamServiceImpl implements TeamService {
         teamRepository.deleteById(team.getId());
         return TeamRequest.fromTeamRequest(teamss);
     }
+
+    @Override
+    public Object deleteMemberById(Long id) {
+        Team teamx = teamRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Team Member not found"));
+        teamRepository.deleteById(teamx.getId());
+        return teamx;
+    }
+
+    @Override
+    public Team findById(Long id) {
+        log.info("Team Member's Id {}:", id);
+        return teamRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("error returned"));
+    }
+
+    @Override
+    public Object findAllTeam() {
+        return teamRepository.findAll();
+    }
+
+
 }

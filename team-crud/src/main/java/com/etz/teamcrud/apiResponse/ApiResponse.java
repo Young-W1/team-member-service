@@ -38,6 +38,14 @@ public class ApiResponse<T> {
         return response;
     }
 
+    public static <T> ApiResponse deleted (T data){
+        ApiResponse response =new ApiResponse();
+        //response.setData(data);
+        response.setStatus("404");
+        response.setMessage("Not found");
+        return response;
+    }
+
     public static <T> ApiResponse noContent (){
         ApiResponse response =new ApiResponse();
         //response.setData(data);

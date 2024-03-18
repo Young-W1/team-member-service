@@ -3,6 +3,7 @@ package com.etz.teamcrud.controller;
 import com.etz.teamcrud.apiResponse.ApiResponse;
 import com.etz.teamcrud.dto.TeamRequest;
 import com.etz.teamcrud.enums.Status;
+import com.etz.teamcrud.model.Projects;
 import com.etz.teamcrud.model.Team;
 import com.etz.teamcrud.repository.ProjectRepository;
 import com.etz.teamcrud.repository.TeamRepository;
@@ -28,7 +29,7 @@ public class TeamController {
 
     @GetMapping("")
     public String getPage(){
-        return "Welcome to team Corporate Solutions";
+        return "Welcome to our team, Corporate Solutions!";
     }
 
 //    @PostMapping("/create")
@@ -40,10 +41,15 @@ public class TeamController {
         return ApiResponse.success(teamService.createNewTeam(request));
     }
 
-    @GetMapping("/team-list")
+    @GetMapping("/team-members")
     //List because it will list out the team members and their projects
-    public List<Team> getAllMembers(){
-        return teamRepository.findAll();
+    public ApiResponse<?> getMembers(){
+        return ApiResponse.success(teamService.findAllTeam());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Team> findById(@PathVariable Long id){ //get member by their id
+        return ResponseEntity.ok(teamService.findById(id));
     }
 
     @PostMapping("/{id}/disable")
@@ -53,16 +59,9 @@ public class TeamController {
 
     }
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     @Transactional
-    public ApiResponse<TeamRequest> deleteMember(@PathVariable Long id) {
-
-        Integer deleted = teamRepository.deleteMemberById(id);
-
-        if (deleted > 0) {
-            return ApiResponse.noContent();
-        } else {
-            return ApiResponse.deleted();
-        }
+    public void deleteMember(@PathVariable Long id) {
+         ApiResponse.deleted(teamService.deleteMemberById(id));
     }
 }

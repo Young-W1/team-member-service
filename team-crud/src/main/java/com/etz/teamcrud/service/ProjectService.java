@@ -7,4 +7,6 @@ public interface ProjectService {
     ProjectRequest createNewProject(ProjectRequest project);
 
     Projects findById(Long id);
+
+    Object findAllProjects();
 }

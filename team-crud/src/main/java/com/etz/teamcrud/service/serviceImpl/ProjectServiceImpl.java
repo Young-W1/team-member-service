@@ -39,5 +39,10 @@ public class ProjectServiceImpl implements ProjectService {
                 .orElseThrow(() -> new RuntimeException("error returned"));
     }
 
+    @Override
+    public Object findAllProjects() {
+        return projectRepository.findAll();
+    }
+
 
 }

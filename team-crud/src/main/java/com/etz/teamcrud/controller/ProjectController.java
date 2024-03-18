@@ -1,6 +1,7 @@
 package com.etz.teamcrud.controller;
 
 
+import com.etz.teamcrud.apiResponse.ApiResponse;
 import com.etz.teamcrud.dto.ProjectRequest;
 import com.etz.teamcrud.model.Projects;
 import com.etz.teamcrud.repository.ProjectRepository;
@@ -31,8 +32,9 @@ public class ProjectController {
     }
 
     @GetMapping("/fetchAll")
-    public List<Projects> getAllProjects(){  //List because it will list out the projects
-        return projectRepository.findAll(); //to return all the projects in the db
+    //List because it will list out the team members and their projects
+    public ApiResponse<?> getProjects(){
+        return ApiResponse.success(projectService.findAllProjects());
     }
 
 
