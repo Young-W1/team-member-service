@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/team-crud/team-crud.iml" filepath="$PROJECT_DIR$/team-crud/team-crud.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/team-member-service.iml" filepath="$PROJECT_DIR$/.idea/team-member-service.iml" />
+    </modules>
+  </component>
+</project>
