@@ -1,7 +1,5 @@
 package com.etz.teamcrud.service.serviceImpl;
 
-
-import com.etz.teamcrud.apiResponse.ApiResponse;
 import com.etz.teamcrud.dto.TeamRequest;
 import com.etz.teamcrud.enums.Status;
 import com.etz.teamcrud.model.Projects;
@@ -9,13 +7,13 @@ import com.etz.teamcrud.model.Team;
 import com.etz.teamcrud.repository.ProjectRepository;
 import com.etz.teamcrud.repository.TeamRepository;
 import com.etz.teamcrud.service.TeamService;
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -24,6 +22,7 @@ public class TeamServiceImpl implements TeamService {
 
     private final ProjectRepository projectRepository;
     private final TeamRepository teamRepository;
+    private ModelMapper mapper;
     @Override
     public Team saveNewMember(Team team) {
         return null;
@@ -31,7 +30,7 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public TeamRequest createNewTeam(TeamRequest team) {
-        log.info("team data {}", team);
+        log.info("created data {}", team);
         Team teamss = new Team();
         Projects project = projectRepository.findById(team.getId())
                 .orElseThrow(() -> new RuntimeException("Project does not exist. Check it."));
@@ -44,7 +43,6 @@ public class TeamServiceImpl implements TeamService {
         teamss.setStatus(Status.ACTIVE);
         teamss.setId(team.getId());
         teamRepository.save(teamss);
-        //return teamss;
         return TeamRequest.fromTeamRequest(teamss);
     }
 
@@ -76,7 +74,6 @@ public class TeamServiceImpl implements TeamService {
         Team teamx = teamRepository.findById(team.getId())
              .orElseThrow(() -> new EntityNotFoundException("Team Member not found"));
 
-
         teamss.setTeam(teamx);
         teamss.setFirstName(team.getFirstName());
         teamss.setUsername(team.getUsername());
@@ -93,7 +90,7 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public Object deleteMemberById(Long id) {
         Team teamx = teamRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Team Member not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Team Member not found. Cannot delete"));
         teamRepository.deleteById(teamx.getId());
         return teamx;
     }
@@ -110,5 +107,19 @@ public class TeamServiceImpl implements TeamService {
         return teamRepository.findAll();
     }
 
+    @Override
+    public Object updateTeamMember(TeamRequest request, Long id) {
+        Team team = teamRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Team Member not found"));
+        team.setFirstName(request.getFirstName());
+        team.setUsername(request.getUsername());
+        team.setLastName(request.getLastName());
+        team.setEmail(request.getEmail());
+        team.setPhoneNumber(request.getPhoneNumber());
+        team.setStatus(Status.UPDATED);
+        team.setId(request.getId());
+        teamRepository.save(team);
+        return TeamRequest.fromTeamRequest(team);
+    }
 
 }

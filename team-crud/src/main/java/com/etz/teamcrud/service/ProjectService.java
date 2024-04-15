@@ -9,4 +9,10 @@ public interface ProjectService {
     Projects findById(Long id);
 
     Object findAllProjects();
+
+    ProjectRequest updateProject(ProjectRequest request);
+
+    //void updateProject(Long id, ProjectRequest request);
+
+    Object updateProject(Long id, ProjectRequest request);
 }

@@ -1,7 +1,10 @@
 package com.etz.teamcrud.model;
 
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
 import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Builder
 @Setter
@@ -22,5 +25,8 @@ public class Projects {
     @Column
     private String description;
 
+    @Column(name = "date_created")
+    @Temporal(TemporalType.DATE)
+    private Date dateCreated;
 
 }

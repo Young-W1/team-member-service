@@ -6,12 +6,12 @@ import com.etz.teamcrud.dto.ProjectRequest;
 import com.etz.teamcrud.model.Projects;
 import com.etz.teamcrud.repository.ProjectRepository;
 import com.etz.teamcrud.service.ProjectService;
-import jakarta.validation.Valid;
+//import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/project")
@@ -19,7 +19,6 @@ import java.util.List;
 public class ProjectController {
 
     private final ProjectService projectService;
-    private final ProjectRepository projectRepository;
 
     @PostMapping("")
     public ResponseEntity<ProjectRequest> createProject(@Valid @RequestBody ProjectRequest request){
@@ -37,5 +36,9 @@ public class ProjectController {
         return ApiResponse.success(projectService.findAllProjects());
     }
 
+    @PutMapping("/{id}")
+    public ApiResponse<ProjectRequest> updateProject(@RequestBody ProjectRequest request, @PathVariable Long id) {
+        return ApiResponse.updated(projectService.updateProject(id, request));
+    }
 
 }

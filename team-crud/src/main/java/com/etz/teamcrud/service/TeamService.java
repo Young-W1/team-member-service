@@ -1,10 +1,10 @@
 package com.etz.teamcrud.service;
-import com.etz.teamcrud.apiResponse.ApiResponse;
+import com.etz.teamcrud.dto.ProjectRequest;
 import com.etz.teamcrud.dto.TeamRequest;
 import com.etz.teamcrud.model.Team;
-import jakarta.transaction.Transactional;
 
-import java.util.List;
+import javax.transaction.Transactional;
+//import jakarta.transaction.Transactional;
 
 public interface TeamService {
 
@@ -25,7 +25,5 @@ public interface TeamService {
 
     Object findAllTeam();
 
-
-    // TeamRequest findAll(TeamRequest request);
-
+    Object updateTeamMember(TeamRequest request, Long id);
 }

@@ -54,4 +54,12 @@ public class ApiResponse<T> {
         return response;
     }
 
+    public static <T> ApiResponse updated (T data){
+        ApiResponse response =new ApiResponse();
+        response.setData(data);
+        response.setStatus("201");
+        response.setMessage("Updated");
+        return response;
+    }
+
 }

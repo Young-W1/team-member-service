@@ -2,9 +2,10 @@ package com.etz.teamcrud.model;
 
 import com.etz.teamcrud.enums.Status;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.List;
 @Builder
 @Setter

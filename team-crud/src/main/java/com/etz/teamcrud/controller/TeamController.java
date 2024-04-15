@@ -2,21 +2,17 @@ package com.etz.teamcrud.controller;
 
 import com.etz.teamcrud.apiResponse.ApiResponse;
 import com.etz.teamcrud.dto.TeamRequest;
-import com.etz.teamcrud.enums.Status;
-import com.etz.teamcrud.model.Projects;
 import com.etz.teamcrud.model.Team;
 import com.etz.teamcrud.repository.ProjectRepository;
 import com.etz.teamcrud.repository.TeamRepository;
 import com.etz.teamcrud.service.TeamService;
 
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+//import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.transaction.Transactional;
 
 @RestController
 @RequestMapping("/api/v1/team")
@@ -63,5 +59,10 @@ public class TeamController {
     @Transactional
     public void deleteMember(@PathVariable Long id) {
          ApiResponse.deleted(teamService.deleteMemberById(id));
+    }
+
+    @PutMapping("/{id}")
+    public ApiResponse<TeamRequest> updateMember(@RequestBody TeamRequest request, @PathVariable Long id) {
+        return ApiResponse.updated(teamService.updateTeamMember(request,id));
     }
 }
